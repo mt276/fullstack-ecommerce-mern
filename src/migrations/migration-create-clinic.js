@@ -2,21 +2,24 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Histories", {
+    await queryInterface.createTable("Clinics", {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
       },
-      patientId: {
-        type: Sequelize.UUID,
+      name: {
+        type: Sequelize.STRING,
       },
-      doctorId: {
-        type: Sequelize.UUID,
+      address: {
+        type: Sequelize.STRING,
       },
       description: {
         type: Sequelize.TEXT,
+      },
+      image: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
@@ -29,6 +32,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Histories");
+    await queryInterface.dropTable("Clinics");
   },
 };

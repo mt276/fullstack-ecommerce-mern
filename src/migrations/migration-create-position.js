@@ -2,26 +2,17 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Bookings", {
+    await queryInterface.createTable("Positions", {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
       },
-      statusId: {
-        type: Sequelize.UUID,
+      value_en: {
+        type: Sequelize.STRING,
       },
-      doctorId: {
-        type: Sequelize.UUID,
-      },
-      patientId: {
-        type: Sequelize.UUID,
-      },
-      date: {
-        type: Sequelize.DATE,
-      },
-      timeType: {
+      value_vi: {
         type: Sequelize.STRING,
       },
       createdAt: {
@@ -35,6 +26,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Bookings");
+    await queryInterface.dropTable("Positions");
   },
 };
