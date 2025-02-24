@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+const { v4: uuidv4 } = require("uuid");
 module.exports = (sequelize, DataTypes) => {
   class Position extends Model {
     /**
@@ -13,10 +14,24 @@ module.exports = (sequelize, DataTypes) => {
   }
   Position.init(
     {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+        allowNull: false,
+      },
       value_en: { type: DataTypes.STRING },
       value_vi: { type: DataTypes.STRING },
     },
-    { sequelize, Position: "Position" }
+    {
+      sequelize,
+      Position: "Position",
+      hooks: {
+        beforeCreate: (user) => {
+          user.id = uuidv4();
+        },
+      },
+    }
   );
 
   return Position;

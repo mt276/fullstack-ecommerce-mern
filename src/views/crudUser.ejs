@@ -1,0 +1,95 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Users</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 mt-3">Create a new User</div>
+        <form action="/post-crud-user" method="POST">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputEmail4">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                name="email"
+                placeholder="Email"
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inputPassword4">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                name="password"
+                placeholder="Password"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputFirstName4">FirstName</label>
+              <input
+                type="firstName"
+                class="form-control"
+                name="firstName"
+                placeholder="FirstName"
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inputLastName4">LastName</label>
+              <input
+                type="lastName"
+                class="form-control"
+                name="lastName"
+                placeholder="LastName"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputAddress">Address</label>
+            <input
+              type="text"
+              class="form-control"
+              name="address"
+              placeholder="1234 Main St"
+            />
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputPhoneNumber">PhoneNumber</label>
+              <input type="text" class="form-control" name="phoneNumber" />
+            </div>
+            <div class="form-group col-md-3">
+              <label for="inputSex">Sex</label>
+              <select name="gender" class="form-control">
+                <option selected value="1">Male</option>
+                <option value="0">Female</option>
+              </select>
+            </div>
+            <div class="form-group col-md-3">
+              <label for="inputRole">Role</label>
+              <select name="roleId" class="form-control">
+                <option selected value="<%= Constants.Role.Admin %>">
+                  Admin
+                </option>
+                <option value="<%= Constants.Role.Doctor %>">Doctor</option>
+                <option value="<%= Constants.Role.Patient %>">Patient</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Sign in</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

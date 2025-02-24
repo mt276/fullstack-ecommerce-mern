@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+const { v4: uuidv4 } = require("uuid");
 module.exports = (sequelize, DataTypes) => {
   class History extends Model {
     /**
@@ -13,12 +14,26 @@ module.exports = (sequelize, DataTypes) => {
   }
   History.init(
     {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+        allowNull: false,
+      },
       patientId: { type: DataTypes.UUID },
       doctorId: { type: DataTypes.UUID },
       description: { type: DataTypes.TEXT },
       files: { type: DataTypes.TEXT },
     },
-    { sequelize, allCode: "History" }
+    {
+      sequelize,
+      allCode: "History",
+      hooks: {
+        beforeCreate: (user) => {
+          user.id = uuidv4();
+        },
+      },
+    }
   );
 
   return History;

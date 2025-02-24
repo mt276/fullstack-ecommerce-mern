@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+const { v4: uuidv4 } = require("uuid");
 module.exports = (sequelize, DataTypes) => {
   class Clinic extends Model {
     /**
@@ -13,12 +14,26 @@ module.exports = (sequelize, DataTypes) => {
   }
   Clinic.init(
     {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+        allowNull: false,
+      },
       name: { type: DataTypes.STRING },
       address: { type: DataTypes.STRING },
       description: { type: DataTypes.TEXT },
       image: { type: DataTypes.STRING },
     },
-    { sequelize, allCode: "Clinic" }
+    {
+      sequelize,
+      allCode: "Clinic",
+      hooks: {
+        beforeCreate: (user) => {
+          user.id = uuidv4();
+        },
+      },
+    }
   );
 
   return Clinic;

@@ -13,10 +13,24 @@ module.exports = (sequelize, DataTypes) => {
   }
   Role.init(
     {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+        allowNull: false,
+      },
       value_en: { type: DataTypes.STRING },
       value_vi: { type: DataTypes.STRING },
     },
-    { sequelize, Employee: "Role" }
+    {
+      sequelize,
+      Employee: "Role",
+      hooks: {
+        beforeCreate: (user) => {
+          user.id = uuidv4();
+        },
+      },
+    }
   );
 
   return Role;
