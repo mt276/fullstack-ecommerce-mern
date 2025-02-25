@@ -2,7 +2,6 @@ import express from "express";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import cors from "cors";
-import viewEngine from "./config/viewEngine";
 import userRoutes from "./routes/user-routes.js";
 import connectDB from "./config/connectDB";
 
@@ -15,9 +14,6 @@ let PORT = process.env.PORT || 6969;
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-//Cấu hình View Engine
-viewEngine(app);
 
 // Kết nối Database
 connectDB();
