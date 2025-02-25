@@ -14,7 +14,7 @@
     <div class="container">
       <div class="row">
         <div class="col-12 mt-3">Create a new User</div>
-        <form action="/post-crud-user" method="POST">
+        <form action="/api/user/create" method="POST">
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="inputEmail4">Email</label>
@@ -79,11 +79,11 @@
             <div class="form-group col-md-3">
               <label for="inputRole">Role</label>
               <select name="roleId" class="form-control">
-                <option selected value="<%= Constants.Role.Admin %>">
+                <option selected value="<%= CONSTANTS.ROLE.ADMIN %>">
                   Admin
                 </option>
-                <option value="<%= Constants.Role.Doctor %>">Doctor</option>
-                <option value="<%= Constants.Role.Patient %>">Patient</option>
+                <option value="<%= CONSTANTS.ROLE.DOCTOR %>">Doctor</option>
+                <option value="<%= CONSTANTS.ROLE.PATIENT %>">Patient</option>
               </select>
             </div>
           </div>

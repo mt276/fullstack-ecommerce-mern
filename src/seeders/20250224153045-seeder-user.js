@@ -1,7 +1,7 @@
 "use strict";
 
 const { v4: uuidv4 } = require("uuid");
-const Constants = require("../utils/constants");
+const CONSTANTS = require("../utils/constants");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
         phoneNumber: "0338847740",
         gender: 1,
         image: "",
-        roleId: Constants.Role.Admin,
+        roleId: CONSTANTS.ROLE.ADMIN,
         positionId: null,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -32,8 +32,7 @@ module.exports = {
         phoneNumber: "0123456789",
         gender: 0,
         image: "",
-        roleId: Constants.Role.Doctor,
-        positionId: Constants.Position.Doctor,
+        roleId: CONSTANTS.ROLE.DOCTOR,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -47,7 +46,7 @@ module.exports = {
         phoneNumber: "0123456780",
         gender: 1,
         image: "",
-        roleId: Constants.Role.Patient,
+        roleId: CONSTANTS.ROLE.PATIENT,
         positionId: null,
         createdAt: new Date(),
         updatedAt: new Date(),

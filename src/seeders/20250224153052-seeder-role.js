@@ -1,27 +1,27 @@
 "use strict";
 
-const Constants = require("../utils/constants");
+const CONSTANTS = require("../utils/constants");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     return queryInterface.bulkInsert("Roles", [
       {
-        id: Constants.Role.Admin,
+        id: CONSTANTS.ROLE.ADMIN,
         value_en: "Admin",
         value_vi: "Quản trị viên",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        id: Constants.Role.Doctor,
+        id: CONSTANTS.ROLE.DOCTOR,
         value_en: "Doctor",
         value_vi: "Bác sĩ",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        id: Constants.Role.Patient,
+        id: CONSTANTS.ROLE.PATIENT,
         value_en: "Patient",
         value_vi: "Bệnh nhân",
         createdAt: new Date(),

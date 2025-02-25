@@ -2,7 +2,7 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Doctor_Clinic_Specialties", {
+    await queryInterface.createTable("DoctorClinicSpecialties", {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -29,6 +29,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Doctor_Clinic_Specialties");
+    await queryInterface.dropTable("DoctorClinicSpecialties");
   },
 };

@@ -2,7 +2,7 @@
 const { Model } = require("sequelize");
 const { v4: uuidv4 } = require("uuid");
 module.exports = (sequelize, DataTypes) => {
-  class Doctor_Clinic_Specialty extends Model {
+  class DoctorClinicSpecialty extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Doctor_Clinic_Specialty.init(
+  DoctorClinicSpecialty.init(
     {
       id: {
         type: DataTypes.UUID,
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      allCode: "Doctor_Clinic_Specialty",
+      allCode: "DoctorClinicSpecialty",
       hooks: {
         beforeCreate: (user) => {
           user.id = uuidv4();
@@ -35,5 +35,5 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  return Doctor_Clinic_Specialty;
+  return DoctorClinicSpecialty;
 };

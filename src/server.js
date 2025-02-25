@@ -1,23 +1,31 @@
-require(`dotenv`).config();
 import express from "express";
+import dotenv from "dotenv";
 import bodyParser from "body-parser";
+import cors from "cors";
 import viewEngine from "./config/viewEngine";
-import initWebRoutes from "./route/web";
+import userRoutes from "./routes/user-routes.js";
 import connectDB from "./config/connectDB";
 
+dotenv.config();
+
 let app = express();
-let port = process.env.PORT || 6969;
+let PORT = process.env.PORT || 6969;
 
-//config app
-
+// Middleware
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//Cấu hình View Engine
 viewEngine(app);
-initWebRoutes(app);
 
+// Kết nối Database
 connectDB();
 
-app.listen(port, () => {
-  console.log("Backend NodeJS is running on the port: ", port);
+// Routes
+app.use("/api/user", userRoutes);
+
+//Khởi động Server
+app.listen(PORT, () => {
+  console.log("Backend NodeJS is running on the port: ", PORT);
 });
