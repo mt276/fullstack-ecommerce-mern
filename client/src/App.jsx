@@ -1,10 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home/Home.js";
-import Header from "./components/Header/index.js";
+import Home from "./pages/Home/Home.jsx";
+import Header from "./components/Header/index.jsx";
 import { createContext, useState, useEffect } from "react";
 import axios from "axios"
+import './App.css'
 
 const MyContext = createContext();
 

@@ -4,7 +4,7 @@ import { IoIosSearch } from "react-icons/io"
 const SearchBox = () => {
     return (
         <>
-            <div className="headerSearch ml-3 mr-3">
+            <div className="headerSearch mx-3">
                 <input type="text" placeholder="Search for product..."></input>
                 <Button><IoIosSearch /></Button>
             </div>

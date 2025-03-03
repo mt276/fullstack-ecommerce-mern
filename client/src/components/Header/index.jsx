@@ -1,13 +1,13 @@
 import Logo from "../../assets/images/logo.png";
 import { Link } from "react-router-dom";
-import CountryDropdown from "./CountryDropdown/index.js";
+import CountryDropdown from "./CountryDropdown/index.jsx";
 import Button from '@mui/material/Button';
 import { FiUser } from "react-icons/fi"
 import { IoBagOutline } from "react-icons/io5";
-import SearchBox from "./SearchBox/index.js";
-import Navigation from "./Navigation/index.js";
+import SearchBox from "./SearchBox/index.jsx";
+import Navigation from "./Navigation/index.jsx";
 import { useContext } from "react";
-import { MyContext } from "../../App.js";
+import { MyContext } from "../../App.jsx";
 
 const Header = () => {
 
@@ -27,7 +27,7 @@ const Header = () => {
                 <header className="header">
                     <div className="container">
                         <div className="row">
-                            <div className="logoWrapper d-flex align-items-center col-sm-2">
+                            <div className="col-sm-2 logoWrapper d-flex align-items-center">
                                 <Link to={"/"}>
                                     <img src={Logo} alt="Logo" />
                                 </Link>
@@ -40,8 +40,8 @@ const Header = () => {
 
                                 <SearchBox />
 
-                                <div className="part3 d-flex align-items-center ml-auto">
-                                    <Button className="circle mr-3"><FiUser /></Button>
+                                <div className="part3 d-flex align-items-center">
+                                    <Button className="circle ml-3"><FiUser /></Button>
                                     <div className="ml-auto cartTab d-flex align-items-center">
                                         <span className="price">$3.29</span>
                                         <div className="position-relative ml-2">
