@@ -1,0 +1,85 @@
+.headerWrapper .header .part2 .countryDrop {
+    width: 170px;
+    height: 50px;
+    min-width: 170px;
+    text-align: left;
+    justify-content: flex-start !important;
+    color: #000 !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-radius: 7px !important;
+    padding: 10px 15px !important;
+}
+
+.headerWrapper .header .part2 .countryDrop .label {
+    font-size: 12px !important;
+    text-transform: capitalize !important;
+    color: rgba(0, 0, 0, 0.4) !important;
+    line-height: 16px;
+}
+
+.headerWrapper .header .part2 .countryDrop .name {
+    font-size: 14px !important;
+    text-transform: capitalize !important;
+    color: #6d4aae !important;
+    font-weight: 700;
+    line-height: 16px;
+}
+
+.headerWrapper .header .part2 .countryDrop span.ml-auto svg {
+    opacity: 0.7;
+}
+
+.locationModal {
+    z-index: 10001 !important;
+}
+
+.locationModal .MuiPaper-elevation {
+    padding: 25px;
+    position: relative;
+}
+
+.locationModal .close_ {
+    color: #000 !important;
+    background: #f1f1f1 !important;
+    border-radius: 50% !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    position: absolute !important;
+    top: 10px;
+    right: 10px;
+    width: 40px !important;
+}
+
+.locationModal .close_ svg {
+    font-size: 22px;
+    opacity: 0.7;
+    color: #000 !important;
+}
+
+.locationModal .countryList {
+    margin-bottom: 0;
+    max-height: 400px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.locationModal .countryList li {
+    width: 100%;
+    list-style: none;
+}
+
+.locationModal .countryList li button {
+    width: 100%;
+    text-transform: capitalize !important;
+    color: #000 !important;
+    justify-content: flex-start !important;
+    padding: 10px 20px !important;
+}
+
+.locationModal .countryList li button:hover {
+    background: #f1f1f1;
+}
+
+.locationModal .countryList li button.active {
+    background: #e2e2e2 !important;
+}

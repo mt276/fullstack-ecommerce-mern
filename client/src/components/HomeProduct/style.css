@@ -1,0 +1,45 @@
+.homeProducts {
+    padding: 25px 0;
+    width: 100%;
+}
+
+.homeProducts .col-md-3 {
+    flex: 0 0 22%;
+    max-width: 22%;
+}
+
+.homeProducts .col-md-9 {
+    flex: 0 0 78%;
+    max-width: 78%;
+}
+
+.homeProducts .sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 85px;
+    z-index: 100;
+}
+
+.homeProducts .banner {
+    border-radius: 7px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.homeProducts .info {
+    width: 35% !important;
+}
+
+.homeProducts .hd {
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.homeProducts .text-sml {
+    font-size: 13.5px;
+}
+
+.homeProducts .text-light {
+    color: #8b8b8b !important;
+}

@@ -1,0 +1,15 @@
+.res-full {
+    width: 65% !important;
+}
+
+.filterTabs .item {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    font-size: 13px;
+    font-weight: 700 !important;
+    justify-content: center;
+    padding: 5px 10px !important;
+    text-transform: capitalize;
+    transition: all .2s;
+}

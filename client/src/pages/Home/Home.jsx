@@ -1,12 +1,14 @@
+import HomeBanner from "../../components/HomeBanner/index"
+import HomeCat from "../../components/HomeCat/index"
+import HomeProduct from "../../components/HomeProduct/index"
+
 const Home = () => {
+
   return (
     <>
-      <div className="homeBannerSection">
-        <div className="row">
-          <div className="col-md-3"></div>
-          <div className="col-md-3"></div>
-        </div>
-      </div>
+      <HomeBanner />
+      <HomeCat />
+      <HomeProduct />
     </>
   );
 };

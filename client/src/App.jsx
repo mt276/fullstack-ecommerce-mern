@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home/Home.jsx";
-import Header from "./components/Header/index.jsx";
+import Home from "./pages/Home/Home";
+import Header from "./components/Header/index";
 import { createContext, useState, useEffect } from "react";
 import axios from "axios"
 import './App.css'
@@ -19,11 +19,15 @@ function App() {
   }, []);
 
   const getCountry = async (url) => {
-    const responsive = await axios.get(url).then((res) => {
-      setCountryList(res.data.data);
-    })
-    console.log(responsive);
-  }
+    try {
+      const response = await axios.get(url);
+      setCountryList(response.data.data);
+      console.log(response.data.data);
+    } catch (error) {
+      console.error("Lỗi khi lấy danh sách quốc gia:", error);
+    }
+  };
+
 
   const values = {
     countryList,
@@ -35,11 +39,10 @@ function App() {
     <>
       <BrowserRouter>
         <MyContext.Provider value={values}>
-          <Header>
-            <Routes>
-              <Route path="/" exact={true} Component={<Home />} />
-            </Routes>
-          </Header>
+          <Header />
+          <Routes>
+            <Route path="/" exact={true} element={<Home />} />
+          </Routes>
         </MyContext.Provider>
       </BrowserRouter>
     </>

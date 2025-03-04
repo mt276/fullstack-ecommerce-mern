@@ -5,6 +5,7 @@ import { FaAngleDown } from 'react-icons/fa6'
 import { IoIosSearch } from "react-icons/io"
 import { MdClose } from "react-icons/md"
 import { MyContext } from '../../../App';
+import "./style.css"
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction='up' ref={ref} {...props} />
@@ -44,7 +45,7 @@ const CountryDropdown = () => {
             <Button className="countryDrop" onClick={() => setIsOpenModal(true)}>
                 <div className="info d-flex flex-column">
                     <span className='label'> Your Location</span>
-                    <span className='name'> {context.selectedCountry !== "" ? (context.selectedCountry.length <= 14 ? context.selectedCountry : context.selectedCountry?.substr(0, 14) + "...") : 'Select Location'} </span>
+                    <span className='name'> {context.selectedCountry !== "" ? (context.selectedCountry.length <= 14 ? context.selectedCountry : context.selectedCountry?.substr(0, 14) + "...") : 'All'} </span>
                 </div>
                 <span className='ml-auto'><FaAngleDown /></span>
             </Button >

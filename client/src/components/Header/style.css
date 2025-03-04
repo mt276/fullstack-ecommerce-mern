@@ -1,0 +1,93 @@
+.logo {
+    background-color: initial;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.logoWrapper img {
+    width: 100%;
+}
+
+.headerWrapperFixed {
+    background: #fff;
+    left: 0;
+    position: fixed;
+    top: 0;
+    transition: all .3s ease-in-out;
+    width: 100%;
+    z-index: 10000;
+}
+
+
+.headerWrapperFixed+div {
+    margin-top: 210px !important;
+}
+
+.headerWrapper {
+    background: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.headerWrapper .top-strip {
+    padding: 8px 0;
+}
+
+.headerWrapper .top-strip p {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.headerWrapper .header {
+    width: 100%;
+    height: auto;
+    padding: 25px 0;
+}
+
+.headerSearchWrapper {
+    position: relative;
+    width: 58%;
+}
+
+.header .part3 .circle {
+    align-items: center;
+    background: #ededed;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-radius: 50% !important;
+    color: #000;
+    height: 45px !important;
+    justify-content: center;
+    min-width: 45px !important;
+    width: 45px !important;
+}
+
+.header .part3 .circle svg {
+    font-size: 22px;
+    color: #000 !important;
+    opacity: .8;
+}
+
+.cartTab .price {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.8);
+    font-weight: 700;
+}
+
+.cartTab button {
+    background: #fff1ee !important;
+}
+
+.cartTab button svg {
+    color: #ea2b0f !important;
+}
+
+.cartTab .count {
+    background: #ea2b0f;
+    border-radius: 50%;
+    color: #fff;
+    height: 20px;
+    position: absolute;
+    right: -4px;
+    top: -6px;
+    width: 20px;
+}
