@@ -91,3 +91,14 @@
     top: -6px;
     width: 20px;
 }
+
+.gotoTop.show {
+    bottom: 12% !important;
+    opacity: 1 !important;
+    transform: scale(1) !important;
+}
+
+.gotoTop svg {
+    color: #fff !important;
+    font-size: 25px !important;
+}

@@ -3,56 +3,7 @@
 }
 
 .homeCat .swiper {
-    padding-right: 2px !important;
-    display: block;
-    list-style: none;
-    margin-left: auto;
-    margin-right: auto;
-    overflow: hidden;
-    padding: 0;
-    position: relative;
-    z-index: 1;
-}
-
-.homeCat .swiper-horizontal {
-    touch-action: pan-y;
-}
-
-.homeCat .swiper-wrapper {
-    box-sizing: initial;
-    display: flex;
-    height: 100%;
-    position: relative;
-    transition-property: transform;
-    transition-timing-function: ease;
-    transition-timing-function: var(--swiper-wrapper-transition-timing-function, initial);
-    width: 100%;
-    z-index: 1;
-}
-
-.homeCat .swiper-backface-hidden .swiper-slide {
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    transform: translateZ(0);
-}
-
-.homeCat .swiper-slide {
-    display: block;
-    flex-shrink: 0;
-    height: 100%;
-    position: relative;
-    transition-property: transform;
-    width: 100%;
-}
-
-.homeCat .swiper {
     overflow: inherit !important;
-}
-
-.homeCat .hd {
-    font-size: 18px;
-    font-weight: 600;
-    text-transform: uppercase;
 }
 
 .homeCat .swiper .item {

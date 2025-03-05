@@ -1,17 +1,16 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Autoplay, Navigation } from "swiper/modules";
 import "./style.css"
 import "swiper/css";
 import "swiper/css/navigation";
-import "swiper/css/pagination";
 
-import Banner1 from "../../assets/images/Banner1.jpg";
-import Banner2 from "../../assets/images/Banner2.jpg";
-import Banner3 from "../../assets/images/Banner3.jpg";
-import Banner4 from "../../assets/images/Banner4.jpg";
-import Banner5 from "../../assets/images/Banner5.jpg";
-import Banner6 from "../../assets/images/Banner6.jpg";
-import Banner7 from "../../assets/images/Banner7.jpg";
+import Banner1 from "../../../assets/images/Banner1.jpg";
+import Banner2 from "../../../assets/images/Banner2.jpg";
+import Banner3 from "../../../assets/images/Banner3.jpg";
+import Banner4 from "../../../assets/images/Banner4.jpg";
+import Banner5 from "../../../assets/images/Banner5.jpg";
+import Banner6 from "../../../assets/images/Banner6.jpg";
+import Banner7 from "../../../assets/images/Banner7.jpg";
 
 
 const banners = [Banner1, Banner2, Banner3, Banner4, Banner5, Banner6, Banner7];
@@ -21,11 +20,10 @@ const HomeBanner = () => {
         <div className="container mt-3">
             <div className="homeBannerSection">
                 <Swiper
-                    modules={[Autoplay, Navigation, Pagination]}
+                    modules={[Autoplay, Navigation]}
                     autoplay={{ delay: 3000, disableOnInteraction: false }}
                     loop={true}
                     navigation={true}
-                    pagination={{ clickable: true }}
                 >
                     {banners.map((banner, index) => (
                         <SwiperSlide key={index}>

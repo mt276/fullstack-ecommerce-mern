@@ -1,0 +1,74 @@
+.newsLetterSection {
+    background-image: linear-gradient(to bottom right, #4a2888, #7a55c1);
+    height: auto;
+    overflow: hidden;
+    padding: 60px 0;
+    position: relative;
+    width: 100%;
+}
+
+.newsLetterSection .col-md-6 {
+    position: static !important;
+}
+
+.newsLetterSection p {
+    font-size: 18px;
+    margin: 10px 0 !important;
+}
+
+.newsLetterSection h3 {
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.newsLetterSection p.text-light {
+    color: #fff !important;
+    font-size: 15px;
+    opacity: .7;
+}
+
+.newsLetterSection form {
+    background: #fff;
+    border-radius: 5px;
+    height: 60px;
+    padding: 10px;
+    position: relative;
+    width: 80%;
+}
+
+.newsLetterSection form svg {
+    font-size: 25px;
+    left: 10px;
+    opacity: .3;
+    position: absolute;
+    top: 17px;
+}
+
+.newsLetterSection form input {
+    background: #fff !important;
+    border: 0 !important;
+    height: 100%;
+    outline: none !important;
+    padding-left: 40px;
+    padding-right: 200px;
+    width: 100%;
+}
+
+.newsLetterSection form button {
+    background: #6d4aae !important;
+    color: #fff !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    padding: 12px 25px !important;
+    position: absolute;
+    right: 7px;
+    text-transform: capitalize !important;
+    top: 6px;
+}
+
+.newsLetterSection img {
+    bottom: 0;
+    position: absolute;
+    right: 0;
+    width: 500px;
+}

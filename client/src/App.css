@@ -41,3 +41,133 @@ body {
 ::-webkit-scrollbar-track {
   background: transparent !important;
 }
+
+::-webkit-scrollbar:horizontal {
+  display: none !important;
+}
+
+.swiper {
+  list-style: none;
+  padding-right: 2px !important;
+  display: block;
+  list-style: none;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.swiper-horizontal {
+  touch-action: pan-y;
+}
+
+.swiper-backface-hidden .swiper-slide {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.swiper-wrapper {
+  box-sizing: initial;
+  display: flex;
+  height: 100%;
+  position: relative;
+  transition-property: transform;
+  transition-timing-function: ease;
+  transition-timing-function: var(--swiper-wrapper-transition-timing-function, initial);
+  width: 100%;
+  z-index: 1;
+}
+
+.swiper-slide {
+  display: block;
+  flex-shrink: 0;
+  height: 100%;
+  position: relative;
+  transition-property: transform;
+  width: 100%;
+}
+
+.swiper-button-prev {
+  right: auto;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: calc(0px - var(--swiper-navigation-size) / 2);
+  position: absolute;
+  left: 3% !important;
+  background: #fff;
+  border-radius: 100%;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%) !important;
+  font-family: FontAwesome !important;
+  font-weight: 700;
+  height: 45px !important;
+  width: 45px !important;
+}
+
+.swiper-button-prev::after {
+  content: "prev";
+  font-family: swiper-icons;
+  font-variant: normal;
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: none !important;
+  color: #000 !important;
+  font-size: 17px !important;
+  opacity: 0.8;
+}
+
+.swiper-button-prev:hover {
+  background: #e7e7e7 !important;
+}
+
+.swiper-button-next {
+  left: auto;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: calc(0px - var(--swiper-navigation-size) / 2);
+  position: absolute;
+  right: -3% !important;
+  background: #fff;
+  border-radius: 100%;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%) !important;
+  font-family: FontAwesome !important;
+  font-weight: 700;
+  height: 45px !important;
+  width: 45px !important;
+}
+
+.swiper-button-next::after {
+  content: "next";
+  font-family: swiper-icons;
+  font-variant: normal;
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: none !important;
+  color: #000 !important;
+  font-size: 17px !important;
+  opacity: 0.8;
+}
+
+.swiper-button-next:hover {
+  background: #e7e7e7 !important;
+}
+
+.hd {
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.text-sml {
+  font-size: 13.5px;
+}
+
+.text-light {
+  color: #8b8b8b !important;
+}

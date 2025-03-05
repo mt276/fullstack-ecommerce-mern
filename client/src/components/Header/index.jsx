@@ -1,13 +1,14 @@
 import Logo from "../../assets/images/logo.jpg";
-import { Link } from "react-router-dom";
-import CountryDropdown from "./CountryDropdown/index";
 import Button from '@mui/material/Button';
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 import { FiUser } from "react-icons/fi"
 import { IoBagOutline } from "react-icons/io5";
+import { IoIosArrowDropupCircle } from "react-icons/io";
+import { MyContext } from "../../App.jsx";
+import CountryDropdown from "./CountryDropdown/index";
 import SearchBox from "./SearchBox/index";
 import Navigation from "./Navigation/index";
-import { useContext } from "react";
-import { MyContext } from "../../App.jsx";
 import "./style.css"
 
 const Header = () => {
@@ -15,6 +16,7 @@ const Header = () => {
     const context = useContext(MyContext);
     return (
         <>
+            <Button className="gotoTop "><IoIosArrowDropupCircle /></Button>
             <div className="headerWrapperFixed fixed">
                 <div className="headerWrapper">
                     <div className="top-strip bg-purple">

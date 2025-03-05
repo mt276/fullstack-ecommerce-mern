@@ -1,0 +1,63 @@
+footer {
+    background: #fff;
+    height: 500px;
+    margin: auto;
+    padding: 25px 0;
+    width: 100%;
+}
+
+footer .topInfo {
+    border-bottom: 1px solid #0000001a;
+    padding-bottom: 20px;
+}
+
+footer .topInfo .col {
+    border-right: 1px solid #0003;
+    padding: 10px 15px 10px 40px;
+}
+
+footer .topInfo .col span {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+footer .topInfo .col svg {
+    font-size: 26px;
+}
+
+footer .linksWrap h5 {
+    color: #7a55c1 !important;
+    font-size: 16px;
+    font-weight: bolder;
+    margin-bottom: 20px;
+}
+
+footer .linksWrap ul li {
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+footer .linksWrap ul li a {
+    color: #4e556e;
+    font-size: 13px;
+}
+
+footer .linksWrap ul li a:hover {
+    color: #000;
+    text-decoration: none;
+}
+
+.socials li a {
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    display: flex;
+    height: 35px;
+    justify-content: center;
+    width: 35px;
+}
+
+.socials li a svg {
+    color: #7a55c1;
+    font-size: 16px;
+}

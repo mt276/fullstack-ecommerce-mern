@@ -27,19 +27,20 @@
 }
 
 .homeProducts .info {
-    width: 35% !important;
+    width: 35%;
 }
 
-.homeProducts .hd {
-    font-size: 18px;
+.viewAllBtn {
+    background: #fff;
+    border: 1px solid #0000001a !important;
+    border-radius: 30px !important;
+    color: #414141 !important;
     font-weight: 600;
-    text-transform: uppercase;
+    padding: 5px 15px !important;
+    text-transform: capitalize !important;
 }
 
-.homeProducts .text-sml {
-    font-size: 13.5px;
-}
-
-.homeProducts .text-light {
-    color: #8b8b8b !important;
+.viewAllBtn svg {
+    color: rgba(0, 0, 0, 0.8) !important;
+    font-size: 20px;
 }

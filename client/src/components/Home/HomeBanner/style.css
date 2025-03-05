@@ -1,0 +1,36 @@
+.homeBannerSection {
+    cursor: pointer;
+    min-height: 300px;
+    position: relative;
+}
+
+.homeBannerSection * {
+    outline: none !important;
+}
+
+.homeBannerSection .swiper {
+    overflow: inherit !important;
+}
+
+.homeBannerSection .swiper .item {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.homeBannerSection .swiper img {
+    border-radius: 10px !important;
+}
+
+.homeBannerSection .swiper-slide.swiper-slide-next {
+    left: 16%;
+    opacity: 0.6;
+}
+
+.homeBannerSection .swiper-slide.swiper-slide-prev {
+    right: 16%;
+    opacity: 0.6;
+}
+
+.homeBannerSection .swiper-button-next {
+    right: -12% !important;
+}
