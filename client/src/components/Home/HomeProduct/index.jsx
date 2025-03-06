@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
-import { ProductRow, ProductRow2, ProductRow3 } from "./ProductRow";
+import { ProductItem, ProductItem2, ProductItem3 } from "./ProductItem";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import CategoryTab from "./CategoryTab";
 
@@ -33,14 +33,14 @@ const HomeProduct = () => {
                                 </div>
                                 <CategoryTab />
                             </div>
-                            <ProductRow />
+                            <ProductItem />
                             <div className="d-flex align-items-center mt-2">
                                 <div class="info w-75">
                                     <h3 class="mb-0 hd">NEW PRODUCTS</h3>
                                     <p class="text-light text-sml mb-0">New products with updated stocks.</p>
                                 </div>
                             </div>
-                            <ProductRow2 />
+                            <ProductItem2 />
                         </div>
                     </div>
                     <div class="d-flex align-items-center mt-4">
@@ -49,7 +49,7 @@ const HomeProduct = () => {
                             <p class="text-light text-sml mb-0">Do not miss the current offers until the end of March.</p>
                         </div>
                     </div>
-                    <ProductRow3 />
+                    <ProductItem3 />
 
                 </div>
             </section>
@@ -61,7 +61,7 @@ const HomeProduct = () => {
                     </div>
                     <Link className="ml-auto" to="/"><Button className="viewAllBtn">View All<IoIosArrowRoundForward /></Button></Link>
                 </div>
-                <ProductRow3 />
+                <ProductItem3 />
             </div>
         </>
     )

@@ -4,7 +4,9 @@
     "Ecommerce",
     "Leste",
     "Jewellery",
-    "IoIosArrowDropupCircle"
+    "IoIosArrowDropupCircle",
+    "Twotone",
+    "Mugisha"
 
   ],
   "html-to-css-autocompletion.triggerCharacters": true,

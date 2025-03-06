@@ -5,6 +5,9 @@ import Header from "./components/Header/index";
 import { createContext, useState, useEffect } from "react";
 import axios from "axios"
 import './App.css'
+import NewLetter from "./components/NewLetter";
+import Footer from "./components/Footer";
+import Product from "./pages/Product/Product";
 
 const MyContext = createContext();
 
@@ -42,7 +45,14 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" exact={true} element={<Home />} />
+
           </Routes>
+          <Routes>
+            <Route path="/product" exact={true} element={<Product />} />
+
+          </Routes>
+          <NewLetter />
+          <Footer />
         </MyContext.Provider>
       </BrowserRouter>
     </>

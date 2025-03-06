@@ -1,16 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { MdFavoriteBorder } from "react-icons/md";
 import { BiExpand } from "react-icons/bi";
-import { FaStar } from "react-icons/fa6";
-
+import Rating from '@mui/material/Rating';
 
 import "./style.css"
 import "swiper/css";
 import "swiper/css/navigation";
+import ProductModal from "../../../Product/ProductModal";
 
 const productRow = [
     { title: "Men Alias-N Regular Fit Spread Collar Shirt", img1: "https://api.spicezgold.com/download/file_1734690981297_011618e4-4682-4123-be80-1fb7737d34ad1714702040213RARERABBITMenComfortOpaqueCasualShirt1.jpg", img2: "https://api.spicezgold.com/download/file_1734690981297_23990e6b-d01e-40fd-bb6b-98198db544c01714702040162RARERABBITMenComfortOpaqueCasualShirt2.jpg", oldPrice: "2000$", netPrice: "1500$" },
@@ -36,7 +36,16 @@ const productRow = [
 ];
 
 
-const ProductRow = () => {
+const ProductItem = () => {
+    const [isOpenProductModel, setIsOpenProductModel] = useState(false);
+
+    const viewProductDetails = () => {
+        setIsOpenProductModel(true)
+    }
+
+    const closeProductModal = () => {
+        setIsOpenProductModel(false)
+    }
 
     return (
         <>
@@ -70,20 +79,14 @@ const ProductRow = () => {
                                     </Link>
                                     <span class="badge badge-primary">10%</span>
                                     <div className="actions">
-                                        <Button><BiExpand /></Button>
+                                        <Button onClick={() => viewProductDetails()}><BiExpand /></Button>
                                         <Button><MdFavoriteBorder /></Button>
                                     </div>
                                 </div>
                                 <div className="info" title={product.title}>
                                     <Link to="/"><h4>{product.title.substr(0, 20) + "..."}</h4></Link>
                                     <span class="text-success d-block">In Stock</span>
-                                    <span>
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStar />
-                                    </span>
+                                    <Rating className="Rating-readOnly" value={5} size="small" precision={0.5} readOnly />
                                     <div class="d-flex">
                                         <span class="oldPrice">{product.oldPrice}</span>
                                         <span class="netPrice text-danger ml-2">{product.netPrice}</span>
@@ -91,14 +94,16 @@ const ProductRow = () => {
                                 </div>
                             </div>
                         </SwiperSlide>
+
                     ))}
                 </Swiper>
+                {isOpenProductModel === true && <ProductModal closeProductModal={closeProductModal} />}
             </div>
         </>
     )
 }
 
-const ProductRow2 = () => {
+const ProductItem2 = () => {
     const chunkArray = (arr, size) => {
         return arr.reduce((acc, _, i) =>
             i % size ? acc : [...acc, arr.slice(i, i + size)], []
@@ -137,13 +142,7 @@ const ProductRow2 = () => {
                             <div className="info" title={product.title}>
                                 <Link to="/"><h4>{product.title.substr(0, 20) + "..."}</h4></Link>
                                 <span class="text-success d-block">In Stock</span>
-                                <span>
-                                    <FaStar />
-                                    <FaStar />
-                                    <FaStar />
-                                    <FaStar />
-                                    <FaStar />
-                                </span>
+                                <Rating className="Rating-readOnly" value={5} size="small" precision={0.5} readOnly />
                                 <div class="d-flex">
                                     <span class="oldPrice">{product.oldPrice}</span>
                                     <span class="netPrice text-danger ml-2">{product.netPrice}</span>
@@ -157,7 +156,7 @@ const ProductRow2 = () => {
     );
 };
 
-const ProductRow3 = () => {
+const ProductItem3 = () => {
 
     return (
         <>
@@ -198,13 +197,7 @@ const ProductRow3 = () => {
                                 <div className="info" title={product.title}>
                                     <Link to="/"><h4>{product.title.substr(0, 20) + "..."}</h4></Link>
                                     <span class="text-success d-block">In Stock</span>
-                                    <span>
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStar />
-                                    </span>
+                                    <Rating className="Rating-readOnly" value={5} size="small" precision={0.5} readOnly />
                                     <div class="d-flex">
                                         <span class="oldPrice">{product.oldPrice}</span>
                                         <span class="netPrice text-danger ml-2">{product.netPrice}</span>
@@ -219,4 +212,4 @@ const ProductRow3 = () => {
     )
 }
 
-export { ProductRow, ProductRow2, ProductRow3 };
+export { ProductItem, ProductItem2, ProductItem3 };

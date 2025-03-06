@@ -171,3 +171,48 @@ body {
 .text-light {
   color: #8b8b8b !important;
 }
+
+.badge {
+  display: inline-block;
+  border-radius: 20px;
+  padding: 7px 10px;
+}
+
+.badge-primary {
+  background: rgb(43, 190, 249) !important;
+}
+
+.btn-blue,
+button {
+  text-transform: capitalize !important;
+}
+
+.btn-blue {
+  color: rgb(255, 255, 255) !important;
+  font-weight: 600 !important;
+  background: rgb(109, 74, 174) !important;
+  padding: 5px 20px !important;
+}
+
+.btn-blue:hover {
+  background: rgb(83, 52, 140) !important;
+}
+
+.btn-blue svg {
+  font-size: 22px;
+}
+
+.btn-round {
+  border-radius: 30px !important;
+}
+
+.btn-big {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  min-width: auto !important;
+  padding: 8px 30px !important;
+}
+
+.bg-red {
+  background: rgb(237, 23, 74) !important;
+}

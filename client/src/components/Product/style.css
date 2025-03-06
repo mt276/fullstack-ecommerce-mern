@@ -1,0 +1,118 @@
+.headerWrapperFixed+section {
+    margin-top: 195px !important;
+}
+
+.productDetails {
+    padding-bottom: 0;
+}
+
+.productDetails .productZoomBig {
+    height: 350px !important;
+}
+
+.productDetails h2.hd {
+    font-size: 26px;
+    line-height: 38px;
+}
+
+.productDetails .text-light {
+    color: rgb(139, 139, 139) !important;
+}
+
+.productDetails .badge-success {
+    color: rgb(0, 184, 83);
+    background: rgb(229, 248, 237);
+}
+
+.productSize {
+    height: auto;
+    width: 100%;
+    padding: 25px 0px;
+}
+
+.productSize ul li {
+    margin-right: 10px !important;
+}
+
+.productSize ul li a {
+    align-items: center;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    font-size: 14px !important;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-image: initial;
+    transition: 0.1s ease-in-out;
+    border-radius: 4px !important;
+    padding: 5px 10px !important;
+    text-decoration: none !important;
+    width: 40px;
+}
+
+.productSize ul li a:hover {
+    background: rgb(236, 236, 236);
+}
+
+.productSize ul li a.active {
+    color: rgb(255, 255, 255) !important;
+    background: rgb(109, 74, 174) !important;
+}
+
+.quantityDrop {
+    width: 150px;
+    gap: 10px;
+}
+
+.quantityDrop button {
+    color: rgb(0, 0, 0);
+    height: 40px !important;
+    min-width: 40px !important;
+    width: 40px !important;
+    background: rgb(237, 238, 245) !important;
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    border-image: initial !important;
+    border-radius: 50% !important;
+}
+
+.quantityDrop button:hover {
+    background: rgb(204, 204, 204) !important;
+}
+
+.quantityDrop button svg {
+    color: rgb(0, 0, 0) !important;
+}
+
+.quantityDrop input {
+    text-align: center;
+    width: 30px;
+    background: rgba(0, 0, 0, 0);
+    border-width: 0px;
+    border-style: initial;
+    border-color: initial;
+    border-image: initial;
+    outline: none !important;
+}
+
+.productDetails .btn-circle {
+    background: #edeef5 !important;
+    border: 1px solid #0000001a !important;
+    border-radius: 50% !important;
+    color: #000;
+    height: 40px !important;
+    min-width: 40px !important;
+    padding: 5px !important;
+    width: 40px !important;
+}
+
+.productDetails .btn-circle:hover {
+    background: #ccc !important;
+}
+
+.productDetails .btn-circle svg {
+    color: #000 !important;
+    font-size: 18px;
+    opacity: .8;
+}
