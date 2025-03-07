@@ -1,0 +1,10 @@
+.MuiDialog-container .MuiPaper-root {
+    max-height: calc(100% - 25px);
+}
+
+.productModal .MuiPaper-elevation {
+    max-width: 900px !important;
+    padding: 25px;
+    position: relative;
+    width: 900px !important;
+}

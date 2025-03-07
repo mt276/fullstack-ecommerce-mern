@@ -1,0 +1,93 @@
+.detailsPageTabs {
+    background: rgb(247, 242, 255);
+    border-radius: 25px !important;
+}
+
+.customTabs ul li {
+    margin-right: 10px !important;
+}
+
+.customTabs ul li button {
+    color: rgb(0, 0, 0) !important;
+    font-size: 14px !important;
+    text-transform: capitalize !important;
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-color: rgba(0, 0, 0, 0.2) !important;
+    border-image: initial !important;
+    border-radius: 30px !important;
+    padding: 6px 25px !important;
+}
+
+.customTabs ul li button.active {
+    color: rgb(255, 255, 255) !important;
+    background: rgb(109, 74, 174) !important;
+}
+
+.table-responsive {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+}
+
+.table-responsive>.table-bordered {
+    border-width: 0px;
+    border-style: initial;
+    border-color: initial;
+    border-image: initial;
+}
+
+.table-bordered,
+.table-bordered td,
+.table-bordered th {
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(222, 226, 230);
+    border-image: initial;
+}
+
+.detailsPageTabs .table td,
+.detailsPageTabs .table th {
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.detailsPageTabs .table td p {
+    margin-bottom: 0px;
+}
+
+.detailsPageTabs .tabContent h3,
+.reviewForm h4 {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.reviewBox {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2) !important;
+}
+
+.reviewForm h4 {
+    margin-bottom: 15px;
+}
+
+.reviewForm .form-group {
+    margin-bottom: 25px;
+}
+
+.reviewForm .form-group .form-control {
+    font-size: 16px;
+    height: 50px;
+    padding-left: 20px;
+    border-radius: 7px !important;
+    outline: none !important;
+}
+
+.reviewForm .form-group textarea.form-control {
+    height: 200px;
+    padding-top: 25px;
+}
+
+.form-control::placeholder {
+    color: rgb(108, 117, 125);
+    opacity: 1;
+}
