@@ -1,0 +1,14 @@
+@url_dev = http://localhost:8080
+@version = v1/api
+@model = shop
+@action = signup
+
+### signUp
+POST {{url_dev}}/{{version}}/{{model}}/{{action}}
+Content-Type: application/json
+
+{
+    "name": "Shopify",
+    "email": "shopify01@gmail.com",
+    "password": "mn123456"
+}
