@@ -1,14 +1,24 @@
 @url_dev = http://localhost:8080
 @version = v1/api
 @model = shop
-@action = signup
 
 ### signUp
-POST {{url_dev}}/{{version}}/{{model}}/{{action}}
+POST {{url_dev}}/{{version}}/{{model}}/signUp
 Content-Type: application/json
+x-api-key: fca7bf7e8c0aee01de3ec36aa32b820af6f28d556d162a99ac523ce950ecd66305bffada83f997b5aa5d463a5a4a633cc75dfcea0b81e3099060edd73314be57
 
 {
     "name": "Shopify",
-    "email": "shopify01@gmail.com",
+    "email": "shopify@gmail.com",
+    "password": "mn123456"
+}
+
+### login
+POST {{url_dev}}/{{version}}/{{model}}/login
+Content-Type: application/json
+x-api-key: fca7bf7e8c0aee01de3ec36aa32b820af6f28d556d162a99ac523ce950ecd66305bffada83f997b5aa5d463a5a4a633cc75dfcea0b81e3099060edd73314be57
+
+{
+    "email": "shopify@gmail.com",
     "password": "mn123456"
 }

@@ -1,11 +1,12 @@
 const express = require('express')
 const router = express.Router()
+const { apiKey, permission } = require('../auth/checkAuth')
 
-router.get('/', (req, res, next) => {
-    return res.send(200).json({
-        message: 'Welcome Shopify'
-    })
-})
+// check apiKey
+router.use(apiKey)
+
+// check permission
+router.use(permission('0000'))
 
 router.use('/v1/api/', require('./access/index'))
 

@@ -6,6 +6,9 @@ const shopModel = require('../models/shop.model')
 const KeyTokenService = require('./keyToken.service')
 const { createTokenPair } = require('../auth/authUtils')
 const { getIntoData } = require('../utils/index')
+const { BadRequestError, NotFoundError, UnauthorizedError } = require('../core/error.response')
+const { OK, Created } = require('../core/success.response')
+const { findByEmail } = require('./shop.service')
 
 const RoleShop = {
     SHOP: 'SHOP',
@@ -16,104 +19,122 @@ const RoleShop = {
 
 class AccessService {
 
-    static signUp = async ({ name, email, password }) => {
-        try {
-            //step1: check email exists?
-            const holderShop = await shopModel.findOne({ email }).lean()
-            if (holderShop) {
-                return {
-                    code: 'xxx',
-                    message: 'Shop already registered!'
-                }
+    static login = async ({ email, password, refreshToken = null }) => {
+
+        //1.check email in dbs
+        const foundShop = await findByEmail({ email })
+        if (!foundShop) throw new BadRequestError('Shop not registered')
+
+        //2.match password
+        const match = bcrypt.compare(password, foundShop.password)
+        if (!match) throw new UnauthorizedError('Authentication error')
+
+        //3.
+        // created privateKey, publicKey
+        const publicKey = crypto.randomBytes(64).toString('hex')
+        const privateKey = crypto.randomBytes(64).toString('hex')
+
+        //4.generate tokens
+        const tokens = await createTokenPair({ userId: foundShop._id, email }, publicKey, privateKey)
+
+        await KeyTokenService.createKeyToken({
+            refreshToken: tokens.refreshToken,
+            privateKey,
+            publicKey
+        })
+        //5.get data return login
+        return new OK({
+            message: 'Shop login successfully',
+            metadata: {
+                shop: getIntoData({ fields: ['_id', 'name', 'email'], object: foundShop }),
+                tokens
             }
+        })
+    }
 
-            const passwordHash = await bcrypt.hash(password, 10)
+    static signUp = async ({ name, email, password }) => {
 
-            const newShop = await shopModel.create({
-                name, email, password: passwordHash, roles: [RoleShop.SHOP]
+        //step1: check email exists?
+        const holderShop = await shopModel.findOne({ email }).lean()
+        if (holderShop) {
+            throw new BadRequestError('Error: Shop already registered!')
+        }
+
+        const passwordHash = await bcrypt.hash(password, 10)
+
+        const newShop = await shopModel.create({
+            name, email, password: passwordHash, roles: [RoleShop.SHOP]
+        })
+
+        if (newShop) {
+
+            //#region created privateKey, publicKey - **Asymmetric Encryption** 
+            // const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
+            //     modulusLength: 4096,
+            //     publicKeyEncoding: {
+            //         type: 'pkcs1',
+            //         format: 'pem'
+            //     },
+            //     privateKeyEncoding: {
+            //         type: 'pkcs1',
+            //         format: 'pem'
+            //     }
+            // })
+
+            // console.log({ privateKey, publicKey }); //save collection KeyStore
+
+            // const publicKeyString = await KeyTokenService.createKeyToken({
+            //     userId: newShop._id,
+            //     publicKey
+            // })
+
+            // if (!publicKeyString) {
+            //     return {
+            //         code: 'xxx',
+            //         message: 'publicKeyString error'
+            //     }
+            // }
+
+            // const publicKeyObject = crypto.createPublicKey(publicKeyString)
+
+            // console.log(`publicKeyObject::`, publicKeyObject);
+
+            // //create token pair
+            // const tokens = await createTokenPair({ userId: newShop._id, email }, publicKeyObject, privateKey)
+            // console.log(`Created Token Success::`, tokens);
+
+            //#endregion
+
+            //#region created encrypt, decrypt - **Symmetric Encryption** 
+            const privateKey = crypto.randomBytes(64).toString('hex')
+            const publicKey = crypto.randomBytes(64).toString('hex')
+
+            const keyStore = await KeyTokenService.createKeyToken({
+                userId: newShop._id,
+                publicKey,
+                privateKey
             })
 
-            if (newShop) {
+            if (!keyStore) {
+                throw new BadRequestError(`Error: KeyStore error`)
+            }
 
-                //#region created privateKey, publicKey - **Asymmetric Encryption** 
-                // const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
-                //     modulusLength: 4096,
-                //     publicKeyEncoding: {
-                //         type: 'pkcs1',
-                //         format: 'pem'
-                //     },
-                //     privateKeyEncoding: {
-                //         type: 'pkcs1',
-                //         format: 'pem'
-                //     }
-                // })
+            const tokens = await createTokenPair({ userId: newShop._id, email }, publicKey, privateKey)
 
-                // console.log({ privateKey, publicKey }); //save collection KeyStore
+            //#endregion
 
-                // const publicKeyString = await KeyTokenService.createKeyTokenRSA({
-                //     userId: newShop._id,
-                //     publicKey
-                // })
-
-                // if (!publicKeyString) {
-                //     return {
-                //         code: 'xxx',
-                //         message: 'publicKeyString error'
-                //     }
-                // }
-
-                // const publicKeyObject = crypto.createPublicKey(publicKeyString)
-
-                // console.log(`publicKeyObject::`, publicKeyObject);
-
-                // //create token pair
-                // const tokens = await createTokenPair({ userId: newShop._id, email }, publicKeyObject, privateKey)
-                // console.log(`Created Token Success::`, tokens);
-
-                //#endregion
-
-                //#region created encrypt, decrypt - **Symmetric Encryption** 
-                const encrypt = crypto.randomBytes(64).toString('hex')
-                const decrypt = crypto.randomBytes(64).toString('hex')
-
-                const keyStore = await KeyTokenService.createKeyTokenAES({
-                    userId: newShop._id,
-                    publicKey: encrypt,
-                    privateKey: decrypt
-                })
-
-                if (!keyStore) {
-                    return {
-                        code: 'xxx',
-                        message: 'keyStore error'
-                    }
+            return new Created({
+                message: 'Shop created successfully',
+                metadata: {
+                    shop: getIntoData({ fields: ['_id', 'name', 'email'], object: newShop }),
+                    tokens
                 }
-
-                const tokens = await createTokenPair({ userId: newShop._id, email }, encrypt, decrypt)
-                console.log(`Created Token Success::`, tokens);
-
-                //#endregion
-
-                return {
-                    code: 201,
-                    metadata: {
-                        shop: getIntoData({ fields: ['_id', 'name', 'email'], object: newShop }),
-                        tokens
-                    }
-                }
-            }
-            return {
-                code: 200,
-                metadata: null
-            }
-
-        } catch (error) {
-            return {
-                code: 'xxx',
-                message: error.message,
-                status: 'error'
-            }
+            })
         }
+        return new OK({
+            message: 'Request successful',
+            metadata: null
+        })
     }
 }
 

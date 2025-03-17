@@ -4,14 +4,23 @@ const JWT = require('jsonwebtoken')
 
 const createTokenPair = async (payload, publicKey, privateKey) => {
     try {
-        // accessToken
+        // // Access Token: Ký bằng Private Key, xác thực bằng Public Key.
+        // const accessToken = await JWT.sign(payload, privateKey, {
+        //     algorithm: 'RS256',
+        //     expiresIn: '2 days'
+        // })
+        // //Refresh Token: Ký bằng Private Key, xác thực bằng Private Key.
+        // const refreshToken = await JWT.sign(payload, privateKey, {
+        //     algorithm: 'RS256',
+        //     expiresIn: '7 days'
+        // })
+
+        // Access Token: Ký bằng Private Key, xác thực bằng Public Key.
         const accessToken = await JWT.sign(payload, publicKey, {
-            //algorithm: 'RS256',
             expiresIn: '2 days'
         })
-
+        //Refresh Token: Ký bằng Private Key, xác thực bằng Private Key.
         const refreshToken = await JWT.sign(payload, privateKey, {
-            //algorithm: 'RS256',
             expiresIn: '7 days'
         })
 
