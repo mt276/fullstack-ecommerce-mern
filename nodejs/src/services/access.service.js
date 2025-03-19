@@ -146,37 +146,28 @@ class AccessService {
         return delKey
     }
 
-    static handleRefreshToken = async (refreshToken) => {
-        //1.check this token used?
-        const foundToken = await KeyTokenService.findByRefreshTokensUsed(refreshToken)
-        if (foundToken) {
-            //decode hacker?
-            const { userId, email } = await verifyJWT(refreshToken, foundToken.privateKey)
-            console.log({ userId, email });
+    static handleRefreshToken = async ({ keyStore, user, refreshToken }) => {
 
-            //delete all token in keyStore
+        //
+        const { userId, email } = user
+
+        if (keyStore.refreshTokensUsed.includes(refreshToken)) {
             await KeyTokenService.deleteKeyById(userId)
             throw new ForbiddenError('Something wrong happened!! Please ReLogin')
         }
 
-        //NO used
-        const holderToken = await KeyTokenService.findByRefreshToken(refreshToken)
-        if (!holderToken) throw new UnauthorizedError('Shop not registered 1 ')
-
-        //verifyToken
-        const { userId, email } = await verifyJWT(refreshToken, holderToken.privateKey)
+        if (keyStore.refreshToken !== refreshToken) throw new UnauthorizedError('Shop not registered')
 
         //check UserId
         const foundShop = await findByEmail({ email })
-        if (!foundShop) throw new UnauthorizedError('Shop not registered 2')
-
+        if (!foundShop) throw new UnauthorizedError('Shop not registered')
 
         //create tokens
-        const tokens = await createTokenPair({ userId, email }, holderToken.publicKey, holderToken.privateKey)
+        const tokens = await createTokenPair({ userId, email }, keyStore.publicKey, keyStore.privateKey)
 
         //update token
         await keyTokenModel.updateOne(
-            { _id: holderToken._id },
+            { _id: keyStore._id },
             {
                 $set: { refreshToken: tokens.refreshToken },
                 $addToSet: { refreshTokensUsed: refreshToken }
@@ -184,7 +175,7 @@ class AccessService {
         );
 
         return {
-            user: { userId, email },
+            user,
             tokens
         }
     }

@@ -10,7 +10,8 @@ const { findByUserId } = require('../services/keyToken.service')
 const HEADER = {
     API_KEY: 'x-api-key',
     CLIENT_ID: 'x-client-id',
-    AUTHORIZATION: 'authorization'
+    AUTHORIZATION: 'authorization',
+    REFRESH_TOKEN: 'x-rt-id'
 }
 
 
@@ -57,30 +58,39 @@ const authentication = asyncHandler(async (req, res, next) => {
     const userId = req.headers[HEADER.CLIENT_ID]
     if (!userId) throw new UnauthorizedError('Invalid Request - Missing Client ID')
 
-
-    //2.verifyToken
-    const authHeader = req.headers[HEADER.AUTHORIZATION];
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        throw new UnauthorizedError('Invalid Request - Missing Access Token');
-    }
-    const accessToken = authHeader.split(' ')[1];
-
-    //3.get accessToken
+    //2.get accessToken
     const keyStore = await findByUserId(userId)
-    if (!keyStore) throw new NotFoundError('Not Found!')
+    if (!keyStore) throw new NotFoundError('Not Found keyStore!')
+
+    //3.verify refreshToken
+    if (req.headers[HEADER.REFRESH_TOKEN]) {
+        try {
+            const refreshToken = req.headers[HEADER.REFRESH_TOKEN]
+            const decodeUser = JWT.verify(refreshToken, keyStore.privateKey)
+            if (userId !== decodeUser.userId) throw new UnauthorizedError('Invalid UserId')
+            req.keyStore = keyStore
+            req.user = decodeUser
+            req.refreshToken = refreshToken
+            return next()
+
+        } catch (error) {
+            throw error
+        }
+
+    }
+    //4.verify accessToken
+    const accessToken = req.headers[HEADER.AUTHORIZATION]
+    if (!accessToken) throw new UnauthorizedError('Invalid Request')
 
     try {
-        //4.check user in dbs
         //5.check keyStore with this userId
         const decodeUser = JWT.verify(accessToken, keyStore.publicKey)
         if (userId !== decodeUser.userId) throw new UnauthorizedError('Invalid Request')
         req.keyStore = keyStore
-        req.user = decodeUser
-        //6.return next
         return next()
 
     } catch (error) {
-        throw new UnauthorizedError('Invalid Access Token');
+        throw error;
     }
 })
 

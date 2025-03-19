@@ -10,13 +10,13 @@ const { authentication } = require('../../auth/authUtils')
 router.post('/shop/login', asyncHandler(accessController.login))
 //signUp
 router.post('/shop/signup', asyncHandler(accessController.signUp))
-//refresh-token
-router.post('/shop/refresh-token', asyncHandler(accessController.handleRefreshToken))
 
 //authentication
 router.use(authentication)
 
 //logout
 router.post('/shop/logout', asyncHandler(accessController.logout))
+//refresh-token
+router.post('/shop/refresh-token', asyncHandler(accessController.handleRefreshToken))
 
 module.exports = router
