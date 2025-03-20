@@ -53,16 +53,6 @@ const unPublishProductByShop = async ({ product_shop, product_id }) => {
     return modifiedCount
 }
 
-const queryProduct = async ({ query, limit, skip }) => {
-    return await product.find(query)
-        .populate('product_shop', 'name email -_id')
-        .sort({ updateAt: -1 })
-        .skip(skip)
-        .limit(limit)
-        .lean()
-        .exec()
-}
-
 const findAllProducts = async ({ limit, sort, page, filter, select }) => {
     const skip = (page - 1) * limit
     const sortBy = sort === 'ctime' ? { _id: -1 } : { _id: 1 }
@@ -81,6 +71,24 @@ const findProduct = async ({ product_id, unSelect }) => {
 
 }
 
+const updateProductById = async ({
+    product_id, bodyUpdate, model, isNew = true
+}) => {
+    return await model.findByIdAndUpdate(product_id, bodyUpdate, {
+        new: isNew
+    })
+}
+
+const queryProduct = async ({ query, limit, skip }) => {
+    return await product.find(query)
+        .populate('product_shop', 'name email -_id')
+        .sort({ updateAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean()
+        .exec()
+}
+
 module.exports = {
     findAllDraftsForShop,
     findAllPublishForShop,
@@ -88,5 +96,6 @@ module.exports = {
     publishProductByShop,
     unPublishProductByShop,
     findAllProducts,
-    findProduct
+    findProduct,
+    updateProductById
 }

@@ -3,9 +3,9 @@
 const { Schema, model } = require('mongoose');
 
 const DOCUMENT_NAME = 'ApiKey'
-const COLLECTION_NAME = 'ApiKeys'
+const COLLECTION_NAME = 'apiKeys'
 // Declare the Schema of the Mongo model
-var apiKeySchema = new Schema({
+const apiKeySchema = new Schema({
     key: {
         type: String,
         required: true,
