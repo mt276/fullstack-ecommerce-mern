@@ -1,9 +1,9 @@
 'use strict'
 
-const { find } = require("lodash")
+const { Types } = require("mongoose")
 const { BadRequestError, NotFoundError } = require("../core/error.response")
 const { discount } = require("../models/discount_model")
-const { findAllDiscountCodesSelect, findAllDiscountCodesUnSelect } = require("../models/repositories/discount.repo")
+const { findAllDiscountCodesSelect, findAllDiscountCodesUnSelect, checkDiscountExists } = require("../models/repositories/discount.repo")
 const { findAllProducts } = require("../models/repositories/product.repo")
 const { convertToObjectIdMongodb } = require("../utils")
 
@@ -11,11 +11,12 @@ class DiscountService {
 
     static async createDiscountCode(payload) {
         const {
-            code, start_date, end_date, is_active,
-            shopId, min_order_value, product_ids, applies_to,
-            name, description, type, value, max_uses, uses_count,
-            max_uses_per_user
+            name, description, type, value, max_value, code,
+            shopId, start_date, end_date, max_uses, uses_count,
+            users_used, max_uses_per_user, min_order_value,
+            is_active, applies_to, product_ids
         } = payload
+
         //kiem tra
         if (new Date() < new Date(start_date) || new Date() > new Date(end_date))
             throw new BadRequestError('Discount code has expired!')
@@ -87,7 +88,7 @@ class DiscountService {
         Get all discount codes available with products
     */
 
-    static async getAllDiscountCodesWithProduct({
+    static async getAllDiscountCodesWithProducts({
         code, shopId, userId, limit, page
     }) {
         //create index for discount_code
@@ -148,6 +149,130 @@ class DiscountService {
 
         return discounts
     }
+
+    static async getDiscountAmount({ codeId, userId, shopId, products }) {
+        const foundDiscount = await checkDiscountExists({
+            model: discount,
+            filter: {
+                discount_code: codeId,
+                discount_shopId: convertToObjectIdMongodb(shopId)
+            }
+        })
+
+        if (!foundDiscount) throw new NotFoundError(`Discount doesn't exists!`)
+
+        const {
+            discount_is_active,
+            discount_max_uses,
+            discount_min_order_value
+        } = foundDiscount
+
+        if (!discount_is_active) throw new NotFoundError('Discount expired!')
+        if (!discount_max_uses) throw new NotFoundError('Discount are out!')
+
+        if (new Date() < new Date(discount_start_date) || new Date() > new Date(endDate))
+            throw new NotFoundError('Discount code has expired')
+
+        //check xem co xet gia tri toi thieu hay khong
+        let totalOrder = 0
+        if (discount_min_order_value > 0) {
+            //get total
+            totalOrder = products.reduce((acc, product) => {
+                return acc * (product.quantity * product.price)
+            })
+
+            if (totalOrder < discount_min_order_value)
+                throw new NotFoundError(`Discount requires a minium order value of ${discount_min_order_value}`)
+        }
+
+
+        // Kiểm tra số lần sử dụng của user
+        if (discount_max_uses_per_user > 0) {
+            const userUsage = discount_users_used.find(user => user.userId = userId)
+            if (userUsage && userUsage.uses >= discount_max_uses_per_user) {
+                throw new NotFoundError(`You have reached the limit of ${discount_max_uses_per_user} uses for this discount`)
+            }
+        }
+
+        //check discount nay la fixed_amount hay  percent
+        let amount = discount_type === 'fixed_amount' ? discount_value : totalOrder * (discount_value / 100)
+
+        // Đảm bảo tổng tiền không bị âm sau giảm giá
+        amount = Math.min(amount, totalOrder);
+
+        return {
+            totalOrder,
+            discount: amount,
+            totalPrice: totalOrder - amount
+        }
+    }
+
+    static async deleteDiscountCode({ shopId, codeId }) {
+
+        const deleted = await discount.findOneAndDelete({
+            discount_code: codeId,
+            discount_shopId: convertToObjectIdMongodb(shopId)
+        })
+
+        return deleted
+    }
+
+    static async cancelDiscountCode({ codeId, shopId, userId }) {
+
+        const foundDiscount = await checkDiscountExists({
+            model: discount,
+            filter: {
+                discount_code: codeId,
+                discount_shopId: convertToObjectIdMongodb(shopId)
+            }
+        })
+
+        if (!foundDiscount) throw new NotFoundError(`Discount doesn't exists!`)
+
+        const {
+            discount_is_active,
+            discount_end_date,
+            discount_users_used = []
+        } = foundDiscount;
+
+        // Kiểm tra mã có còn hiệu lực không
+        if (!discount_is_active || new Date() > new Date(discount_end_date)) {
+            throw new NotFoundError('Discount code is no longer valid');
+        }
+
+        // Kiểm tra user đã sử dụng mã giảm giá chưa
+        const userUsage = discount_users_used.find(user => user.userId === userId);
+        if (!userUsage) {
+            throw new NotFoundError('User has not used this discount code');
+        }
+
+        // Nếu user đã sử dụng nhiều lần, chỉ giảm số lần dùng thay vì xóa hẳn
+        if (userUsage.uses > 1) {
+            const result = await discount.findOneAndUpdate(
+                { _id: foundDiscount._id, "discount_users_used.userId": userId },
+                {
+                    $inc: {
+                        "discount_users_used.$.uses": -1,
+                        discount_uses_count: -1,
+                        discount_max_uses: 1
+                    }
+                },
+                { new: true }
+            );
+            return result;
+        } else {
+            // Nếu user chỉ dùng 1 lần, xóa user khỏi danh sách
+            const result = await discount.findByIdAndUpdate(foundDiscount._id, {
+                $pull: { discount_users_used: { userId } },
+                $inc: {
+                    discount_uses_count: -1,
+                    discount_max_uses: 1
+                }
+            }, { new: true })
+
+            return result
+        }
+    }
 }
 
-module.exports = new DiscountService()
+module.exports = DiscountService

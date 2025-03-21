@@ -34,7 +34,9 @@ app.use((error, req, res, next) => {
     const statusCode = error.status || 500
     return res.status(statusCode).json({
         code: statusCode,
-        message: error.message || 'Internal Server'
+        message: error.message || 'Internal Server',
+        stack: error.stack
+
     })
 })
 

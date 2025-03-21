@@ -41,7 +41,7 @@ class KeyTokenService {
     }
 
     static findByUserId = async (userId) => {
-        return await keyTokenModel.findOne({ user: new convertToObjectIdMongodb(userId) })
+        return await keyTokenModel.findOne({ user: convertToObjectIdMongodb(userId) })
     }
 
     static removeKeyById = async (id) => {
@@ -57,7 +57,7 @@ class KeyTokenService {
     }
 
     static deleteKeyById = async (userId) => {
-        return await keyTokenModel.deleteOne({ user: new convertToObjectIdMongodb(userId) })
+        return await keyTokenModel.deleteOne({ user: convertToObjectIdMongodb(userId) })
     }
 
 

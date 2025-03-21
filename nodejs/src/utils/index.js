@@ -52,7 +52,9 @@ const updateNestedObjectParser = obj => {
     })
 }
 
-const convertToObjectIdMongodb = id => Types.Object(id)
+const convertToObjectIdMongodb = (id) => {
+    return new Types.ObjectId(id)
+}
 
 module.exports = {
     getIntoData,
