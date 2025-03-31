@@ -1,11 +1,10 @@
 'use strict'
 
-const { Types } = require("mongoose")
 const { BadRequestError, NotFoundError } = require("../core/error.response")
 const { discount } = require("../models/discount_model")
 const { findAllDiscountCodesSelect, findAllDiscountCodesUnSelect, checkDiscountExists } = require("../models/repositories/discount.repo")
 const { findAllProducts } = require("../models/repositories/product.repo")
-const { convertToObjectIdMongodb } = require("../utils")
+const { convertToObjectIdMongodb, removeUndefinedObject, updateNestedObjectParser } = require("../utils")
 
 class DiscountService {
 
@@ -57,9 +56,9 @@ class DiscountService {
     }
 
     static async updateDiscountCode(discountId, payload) {
+        console.log(discountId);
         //1. remove fields has null, undefined 
         const objectParams = removeUndefinedObject(payload)
-
         //2.kiem tra discount co ton tai khong
         const foundDiscount = await discount.findById(discountId)
         if (!foundDiscount)
@@ -78,10 +77,10 @@ class DiscountService {
             }
         }
 
-        //update discount
-        const updateDiscount = await discount.findByIdAndUpdate(discountId, objectParams, { new: true })
-
-        return updateDiscount
+        // 5. Thực hiện cập nhật
+        const updatedDiscount = await discount.findByIdAndUpdate(discountId, { $set: objectParams }, { new: true })
+        console.log(updatedDiscount);
+        return updatedDiscount
     }
 
     /*
@@ -151,12 +150,13 @@ class DiscountService {
     }
 
     static async getDiscountAmount({ codeId, userId, shopId, products }) {
+
         const foundDiscount = await checkDiscountExists({
             model: discount,
             filter: {
                 discount_code: codeId,
                 discount_shopId: convertToObjectIdMongodb(shopId)
-            }
+            },
         })
 
         if (!foundDiscount) throw new NotFoundError(`Discount doesn't exists!`)
@@ -164,13 +164,19 @@ class DiscountService {
         const {
             discount_is_active,
             discount_max_uses,
-            discount_min_order_value
+            discount_min_order_value,
+            discount_start_date,
+            discount_end_date,
+            discount_max_uses_per_user,
+            discount_users_used,
+            discount_type,
+            discount_value
         } = foundDiscount
 
         if (!discount_is_active) throw new NotFoundError('Discount expired!')
         if (!discount_max_uses) throw new NotFoundError('Discount are out!')
 
-        if (new Date() < new Date(discount_start_date) || new Date() > new Date(endDate))
+        if (new Date() < new Date(discount_start_date) || new Date() > new Date(discount_end_date))
             throw new NotFoundError('Discount code has expired')
 
         //check xem co xet gia tri toi thieu hay khong
@@ -178,8 +184,8 @@ class DiscountService {
         if (discount_min_order_value > 0) {
             //get total
             totalOrder = products.reduce((acc, product) => {
-                return acc * (product.quantity * product.price)
-            })
+                return acc + (product.quantity * product.price);
+            }, 0)
 
             if (totalOrder < discount_min_order_value)
                 throw new NotFoundError(`Discount requires a minium order value of ${discount_min_order_value}`)
@@ -196,7 +202,7 @@ class DiscountService {
 
         //check discount nay la fixed_amount hay  percent
         let amount = discount_type === 'fixed_amount' ? discount_value : totalOrder * (discount_value / 100)
-
+        console.log(`amount::::`, amount);
         // Đảm bảo tổng tiền không bị âm sau giảm giá
         amount = Math.min(amount, totalOrder);
 
@@ -207,10 +213,10 @@ class DiscountService {
         }
     }
 
-    static async deleteDiscountCode({ shopId, codeId }) {
+    static async deleteDiscountCode({ discountId, shopId }) {
 
         const deleted = await discount.findOneAndDelete({
-            discount_code: codeId,
+            _id: convertToObjectIdMongodb(discountId),
             discount_shopId: convertToObjectIdMongodb(shopId)
         })
 

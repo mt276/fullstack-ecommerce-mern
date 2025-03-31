@@ -2,6 +2,7 @@
 
 const { BadRequestError } = require('../core/error.response')
 const { product, clothing, electronic, furniture } = require('../models/product.model')
+const { inventory } = require('../models/inventory.model')
 
 const {
     findAllDraftsForShop,
@@ -47,37 +48,38 @@ class ProductFactory {
 
     //put
     static async publishProductByShop({ product_shop, product_id }) {
-        return await publishProductByShop({ product_shop, product_id })
+        return await publishProductByShop({ product_shop, product_id, model: product })
     }
 
     static async unPublishProductByShop({ product_shop, product_id }) {
-        return await unPublishProductByShop({ product_shop, product_id })
+        return await unPublishProductByShop({ product_shop, product_id, model: product })
     }
 
     //query
     static async findAllDraftsForShop({ product_shop, limit = 50, skip = 0 }) {
         const query = { product_shop, isDraft: true }
-        return await findAllDraftsForShop({ query, limit, skip })
+        return await findAllDraftsForShop({ query, limit, skip, model: product })
     }
 
     static async findAllPublishForShop({ product_shop, limit = 50, skip = 0 }) {
         const query = { product_shop, isPublished: true }
-        return await findAllPublishForShop({ query, limit, skip })
+        return await findAllPublishForShop({ query, limit, skip, model: product })
     }
 
     static async searchProducts({ keySearch }) {
-        return await searchProductByUser({ keySearch })
+        return await searchProductByUser({ keySearch, model: product })
     }
 
     static async findAllProducts({ limit = 50, sort = 'ctime', page = 1, filter = { isPublished: true } }) {
         return await findAllProducts({
             limit, sort, filter, page,
-            select: ['product_name', 'product_price', 'product_thumb']
+            select: ['product_name', 'product_price', 'product_thumb', 'product_shop'],
+            model: product
         })
     }
 
     static async findProduct({ product_id }) {
-        return await findProduct({ product_id, unSelect: ['__v', 'product_validations'] })
+        return await findProduct({ product_id, unSelect: ['__v', 'product_validations'], model: product })
     }
 }
 
@@ -104,7 +106,8 @@ class Product {
             await insertInventory({
                 productId: newProduct._id,
                 shopId: this.product_shop,
-                stock: this.product_quantity
+                stock: this.product_quantity,
+                model: inventory
             })
         }
         return newProduct

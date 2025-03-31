@@ -41,15 +41,18 @@ const removeUndefinedObject = obj => {
 const updateNestedObjectParser = obj => {
     const final = {}
     Object.keys(obj).forEach(k => {
-        if (typeof obj[k] === 'object' && !Array.isArray(obj[k])) {
-            const response = updateNestedObjectParser(obj[k])
-            Object.keys(response).forEach(a => {
-                final[`${k}.${a}`] = response[a]
-            })
+        const value = obj[k]
+        if (value === undefined || value === null) return
+        if (typeof value === 'object' && !Array.isArray(value)) {
+            const response = updateNestedObjectParser(value);
+            Object.keys(response).forEach((a) => {
+                final[`${k}.${a}`] = response[a];
+            });
         } else {
-            final[k] = obj[k]
+            final[k] = value;
         }
     })
+    return final
 }
 
 const convertToObjectIdMongodb = (id) => {

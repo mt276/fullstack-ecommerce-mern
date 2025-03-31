@@ -1,20 +1,18 @@
 'use strict'
 
-const { Types } = require('mongoose')
-const { product, clothing, electronic, furniture } = require('../product.model')
 const { getSelectData, unGetSelectData, convertToObjectIdMongodb } = require('../../utils')
 
-const findAllDraftsForShop = async ({ query, limit, skip }) => {
-    return await queryProduct({ query, limit, skip })
+const findAllDraftsForShop = async ({ query, limit, skip, model }) => {
+    return await queryProduct({ query, limit, skip, model })
 }
 
-const findAllPublishForShop = async ({ query, limit, skip }) => {
-    return await queryProduct({ query, limit, skip })
+const findAllPublishForShop = async ({ query, limit, skip, model }) => {
+    return await queryProduct({ query, limit, skip, model })
 }
 
-const searchProductByUser = async ({ keySearch }) => {
+const searchProductByUser = async ({ keySearch, model }) => {
     const regexSearch = new RegExp(keySearch)
-    const results = await product.find({
+    const results = await model.find({
         isDraft: true,
         $text: { $search: regexSearch }
     }, {
@@ -26,8 +24,8 @@ const searchProductByUser = async ({ keySearch }) => {
     return results
 }
 
-const publishProductByShop = async ({ product_shop, product_id }) => {
-    const foundShop = await product.findOne({
+const publishProductByShop = async ({ product_shop, product_id, model }) => {
+    const foundShop = await model.findOne({
         product_shop: convertToObjectIdMongodb(product_shop),
         _id: convertToObjectIdMongodb(product_id)
     })
@@ -39,8 +37,8 @@ const publishProductByShop = async ({ product_shop, product_id }) => {
 
     return modifiedCount
 }
-const unPublishProductByShop = async ({ product_shop, product_id }) => {
-    const foundShop = await product.findOne({
+const unPublishProductByShop = async ({ product_shop, product_id, model }) => {
+    const foundShop = await model.findOne({
         product_shop: convertToObjectIdMongodb(product_shop),
         _id: convertToObjectIdMongodb(product_id)
     })
@@ -53,10 +51,10 @@ const unPublishProductByShop = async ({ product_shop, product_id }) => {
     return modifiedCount
 }
 
-const findAllProducts = async ({ limit, sort, page, filter, select }) => {
+const findAllProducts = async ({ limit, sort, page, filter, select, model }) => {
     const skip = (page - 1) * limit
     const sortBy = sort === 'ctime' ? { _id: -1 } : { _id: 1 }
-    const products = await product.find(filter)
+    const products = await model.find(filter)
         .sort(sortBy)
         .skip(skip)
         .limit(limit)
@@ -66,8 +64,8 @@ const findAllProducts = async ({ limit, sort, page, filter, select }) => {
     return products
 }
 
-const findProduct = async ({ product_id, unSelect }) => {
-    return await product.findById(product_id).select(unGetSelectData(unSelect))
+const findProduct = async ({ product_id, unSelect, model }) => {
+    return await model.findById(product_id).select(unGetSelectData(unSelect))
 
 }
 
@@ -79,14 +77,18 @@ const updateProductById = async ({
     })
 }
 
-const queryProduct = async ({ query, limit, skip }) => {
-    return await product.find(query)
+const queryProduct = async ({ query, limit, skip, model }) => {
+    return await model.find(query)
         .populate('product_shop', 'name email -_id')
         .sort({ updateAt: -1 })
         .skip(skip)
         .limit(limit)
         .lean()
         .exec()
+}
+
+const getProductId = async ({ productId, model }) => {
+    return await model.findOne({ _id: convertToObjectIdMongodb(productId) }).lean()
 }
 
 module.exports = {
@@ -97,5 +99,6 @@ module.exports = {
     unPublishProductByShop,
     findAllProducts,
     findProduct,
-    updateProductById
+    updateProductById,
+    getProductId
 }
