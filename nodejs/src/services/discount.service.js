@@ -1,7 +1,7 @@
 'use strict'
 
 const { BadRequestError, NotFoundError } = require("../core/error.response")
-const { discount } = require("../models/discount_model")
+const { discount } = require("../models/discount.model")
 const { findAllDiscountCodesSelect, findAllDiscountCodesUnSelect, checkDiscountExists } = require("../models/repositories/discount.repo")
 const { findAllProducts } = require("../models/repositories/product.repo")
 const { convertToObjectIdMongodb, removeUndefinedObject, updateNestedObjectParser } = require("../utils")

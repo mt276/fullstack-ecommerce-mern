@@ -3,7 +3,7 @@
 const insertInventory = async ({
     productId, shopId, stock, location = 'unKnow', model
 }) => {
-    return await model.inventory.create({
+    return await model.create({
         inventory_productId: productId,
         inventory_shopId: shopId,
         inventory_stock: stock,

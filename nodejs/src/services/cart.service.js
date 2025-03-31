@@ -2,7 +2,7 @@
 
 const { cart } = require("../models/cart.model")
 const { product } = require("../models/product.model")
-const { createUserCart, updateUserCartQuantity, deleteUserCart, getListUserCart } = require("../models/repositories/cart.repo")
+const { createUserCart, updateUserCartQuantity, deleteUserCart, getListUserCart, findProductByCart, addProductToCart } = require("../models/repositories/cart.repo")
 const { getProductId } = require("../models/repositories/product.repo")
 const { NotFoundError } = require('../core/error.response')
 
@@ -32,8 +32,22 @@ class CartService {
             return await userCart.save()
         }
 
-        //gio hang ton tai, va co san pham nay thi update quantity
-        return await updateUserCartQuantity({ userId, product, model: cart })
+        // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
+        const foundProduct = await findProductByCart({
+            productId: product.productId,
+            userId,
+            model: cart
+        })
+
+        if (foundProduct) {
+            //gio hang ton tai, va co san pham nay thi update quantity
+            return await updateUserCartQuantity({ userId, product, model: cart })
+        } else {
+            //nếu chưa có sản phẩm này thì thêm vào cart
+            return await addProductToCart({ userId, product, model: cart })
+        }
+
+
     }
 
     //update

@@ -1,5 +1,7 @@
 'use strict'
 
+const { convertToObjectIdMongodb } = require("../../utils")
+
 const createUserCart = async ({ userId, product, model }) => {
     const query = { cart_userId: userId, cart_state: 'active' },
         updateInsert = {
@@ -47,9 +49,36 @@ const getListUserCart = async ({ userId, model }) => {
     }).lean()
 }
 
+const findCartById = async ({ cartId, model }) => {
+    return await model.findOne({ _id: convertToObjectIdMongodb(cartId), cart_state: 'active' }).lean()
+}
+
+const findProductByCart = async ({ productId, cartId, model }) => {
+    const cart = await model.findOne({
+        _id: convertToObjectIdMongodb(cartId),
+        cart_state: 'active',
+        cart_products: {
+            $elemMatch: { productId: convertToObjectIdMongodb(productId) }
+        }
+    }).lean()
+
+    return cart?.cart_products?.[0] || null;
+}
+
+const addProductToCart = async ({ userId, product, model }) => {
+    return await model.findOneAndUpdate(
+        { cart_userId: userId, cart_state: 'active' },
+        { $push: { cart_products: product } },
+        { upsert: true, new: true }
+    )
+}
+
 module.exports = {
     createUserCart,
     updateUserCartQuantity,
     deleteUserCart,
-    getListUserCart
+    getListUserCart,
+    findCartById,
+    findProductByCart,
+    addProductToCart
 }
