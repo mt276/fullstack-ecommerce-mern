@@ -26,4 +26,6 @@ const apiKeySchema = new Schema({
 });
 
 //Export the model
-module.exports = model(DOCUMENT_NAME, apiKeySchema);
+module.exports = {
+    apiKey: model(DOCUMENT_NAME, apiKeySchema)
+}

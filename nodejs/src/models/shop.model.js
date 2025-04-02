@@ -40,4 +40,6 @@ const shopSchema = new Schema({
 });
 
 //Export the model
-module.exports = model(DOCUMENT_NAME, shopSchema);
+module.exports = {
+    shop: model(DOCUMENT_NAME, shopSchema)
+}

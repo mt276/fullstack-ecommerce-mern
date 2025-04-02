@@ -33,4 +33,6 @@ const keyTokenSchema = new Schema({
 });
 
 //Export the model
-module.exports = model(DOCUMENT_NAME, keyTokenSchema);
+module.exports = {
+    keyToken: model(DOCUMENT_NAME, keyTokenSchema)
+}
